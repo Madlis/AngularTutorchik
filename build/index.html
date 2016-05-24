@@ -8,21 +8,18 @@
 <body>
     <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
         <h3 class="panel-header">Tasks List</h3>
-        <div>There are {{tasks.length}} tasks</div> <!--самый популярный вид привязки-->
-        <div>
-            <!--эффект от {{}} и ng-bind один и тот же-->
-            There are <span ng-bind="tasks.length"></span> tasks <!--при таком варианте привязки нам требуется дополнительный элемент (span)-->
+        <!--на самом деле ng-model можно использовать как для one-way так и для two-way привязок (создавая или нет редактируемые контролы)-->
+        <div class="well">
+            <div>The first task is: {{tasks[0].action}}</div>
+            <!--это простая inline привязка которая просто отображает данные модели-->
         </div>
-        <div ng-bind-template="First task: {{tasks[0].action}}. Second task: {{tasks[1].action}}"></div>
-        <!--ng-bind может отобразить только одну привязку. Если вы хотите отобразить множество привязок, то используйте ng-bind-template-->
-        <!--недостатком вот таких привязок {{}} является то, что angularjs обрабатывает каждую из них. Это может составить проблему когда вы используете несколько фреймворков-->
-        <div>
-            AngularJS uses {{and}} characters for templates
-            <!--angularjs не будет жаловатся на то, что мы пытаемся привязать несуществующие данные потому что он думает, что они будут созданы позже.
-            Если мы ссылаемся в привязке на данные, которых не существует, то эта привязка просто не отобразится-->
-        </div>
-        <div ng-non-bindable>
-            AngularJS uses {{and}} characters for templates
+        <div class="form-group well">
+            <label for="firstItem">Set first item:</label>
+            <input name="firstItem" class="form-control" ng-model="tasks[0].action" />
+            <!--это two-way binding двусторонняя привязка может применятся только к тем элементам в которые пользователь может ввести значения-->
+            <!--изменения в input обновляют данные модели откуда в свою очередь их черпает привязка one-way-->
+            <!--на самом деле здесь нет никакой магии и все основано на событиях javascript которые распространяются через сервис scope-->
+            <!--одним из преимуществ angularjs является динамическое создание свойств модели и это означает что они создаются только тогда когда стают необходимы-->
         </div>
     </div>
 
