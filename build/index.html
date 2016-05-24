@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/style.min.css">
 </head>
 <body>
-    <!-- ng-repeat создает экземпляры по шаблону для каждого элемента коллекции. Каждый экземпляр шаблона получает собственную область видимости, в которой создаются переменные, имеющиеся в текущем элементе коллекции и в $index устанавливается индекс или ключ элемента. -->
-    <div class="container" ng-controller="contriesCtrl">
-        <div class="container" ng-repeat="contry in contries">
-            <h1 class="h1">Страна: {{contry.name}}</h1>
-            <p>Площадь: {{contry.area}} </p>
-            <p>Население: {{contry.population}}</p>
-            <p>Столица: {{contry.capital.name}}</p>
+    <style>
+        .done-true {
+        /*Добавляет зачеркивание к выполненому делу.*/
+          text-decoration: line-through;
+          color: grey;
+        }
+        .done-false {
+            /*Делает красным не выполненное дело*/
+          text-decoration: underline;
+          color: red;
+        }
+    </style>
+    <div style="width: 600px; margin: 0 auto;">
+        <h2 class="h1">Список покупок</h2>
+        <div class="panel" ng-controller="ListCtrl">
+
+            <span class="h4">Осталось {{remain()}} из {{items.length}}</span>
+            <!--Конструкция {{ }} указывает на место связывания данных в HTML.
+            AngularJS автоматически обновит это место, если функция remain() вернет значение, отличное от предыдущего-->
+             <table class="table table-striped">
+                <tbody>
+                    <tr ng-repeat="item in items">
+                        <!--Используйте ng-repeat чтобы показать набор. Здесь для каждого элемента item,
+                        AngularJS создаст копию шаблона. Когда объекты будут добавлены в набор items
+                        ng-repeat автоматически добавит новые элементы в DOM. Точно так же,
+                        при удалении объектов из items соответствующие элементы удалятся. Это одна из наиболее универсальных директив AngularJS.-->
+                        <td><input class="checkbox-inline" type="checkbox" ng-model="item.done"></td>
+                        <!--Связывает форму с моделью. Это значит, что любые изменения в форме обновят данные модели, а при изменении модели обновятся элементы формы.
+                        AngularJS автоматически копирует состояние чекбокса в item.done.
+                        И наоборот, если обновится item.done чекбокс изменится соответствующим образом.-->
+                        <td><span class="done-{{item.done}}">{{item.text}}</span></td>
+                        <!--Когда item.done становится true, то CSS-селектор становится done-true и к нему затем применяется зачеркивание.-->
+                    </tr>
+                </tbody>
+            </table>
+            <form ng-submit="addItem()">
+                <!--Перехватывает событие отправки формы и вместо этого вызывает addItem.
+                В этом методе мы читаем свойство itemText и вставляем его в набор items.-->
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="itemText" size="30"
+                       placeholder="Добавить покупку.">
+                </div>
+                    <input class="btn btn-primary" type="submit" value="Добавить">
+            </form>
         </div>
     </div>
 
