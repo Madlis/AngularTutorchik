@@ -9,21 +9,13 @@
 
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
         <h3 class="panel-header">Tasks List</h3>
-        <!--очень часто в разработке мы сталкиваемся со случаями когда нам нужно генерировать повторно целые шаблоны и к сожалению директива ng-repeat этого не позволяет-->
-        <!--решением проблемы является использование директив ng-repeat-start и ng-repeat-end-->
-        <!--в этом случае мы четко определяем откуда у нас будет начинатся шаблон для повторения (ng-repeat-start) и где он заканчивается (ng-repeat-end)-->
-        <!--ng-repeat-start будет повторять элементы до тех пор пока не встретит ng-repeat-end далее выполняется переход на следующую итерацию-->
-        <table class="table">
-            <tr ng-repeat-start="task in tasks">
-                <td>№ {{$index}}</td>
-            </tr>
-            <tr>
-                <td>Description: {{task.action}}</td>
-            </tr>
-            <tr ng-repeat-end>
-                <td>The {{$index}} task is {{task.complete? '' : "not "}} done</td>
-            </tr>
-        </table>
+        <ng-include src="'../table.html'" />
+        <!--директива ng-include с помощью AJAX запрашивает с сервера фрагмент html разметки,
+        компилирует его для обработки директив которе там могут быть и далее добавляет его в DOM, это аналог partial view-->
+        <p>Removed text</p>
+        <!--директиву ng-incude стоит применять только с открывающим и закрывающим тегами
+        так как если применить только один тег то все что содержится в DOM после этой директивы будет удалено, это можно увидеть на примере параграфа-->
+ 
     </div>
     <script src="libs/jquery/jquery.js"></script>
     <!-- <script src="libs/bootstrap-material-design/js/material.js"></script> -->
