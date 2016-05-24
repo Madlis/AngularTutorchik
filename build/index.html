@@ -7,20 +7,59 @@
 </head>
 <body>
     <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-        <h3 class="panel-header">Tasks List</h3>
-        <!--на самом деле ng-model можно использовать как для one-way так и для two-way привязок (создавая или нет редактируемые контролы)-->
-        <div class="well">
-            <div>The first task is: {{tasks[0].action}}</div>
-            <!--это простая inline привязка которая просто отображает данные модели-->
-        </div>
-        <div class="form-group well">
-            <label for="firstItem">Set first item:</label>
-            <input name="firstItem" class="form-control" ng-model="tasks[0].action" />
-            <!--это two-way binding двусторонняя привязка может применятся только к тем элементам в которые пользователь может ввести значения-->
-            <!--изменения в input обновляют данные модели откуда в свою очередь их черпает привязка one-way-->
-            <!--на самом деле здесь нет никакой магии и все основано на событиях javascript которые распространяются через сервис scope-->
-            <!--одним из преимуществ angularjs является динамическое создание свойств модели и это означает что они создаются только тогда когда стают необходимы-->
-        </div>
+            <h3 class="panel-header">Tasks List</h3>
+       <!--генерация однотипных элементов самая распространенная задаче в разработке для этого следует использовать директиву ng-repeat-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td>{{task.action}}</td>
+                    <td>{{task.complete}}</td>
+                    <!--это один из самых распространенных способов использования ng-repeat - генерация строк таблицы на основе коллекции данных-->
+                    <!--источником данных может быть что-то перечислимое например массив или объект-->
+                    <!--итерируя элементами массив angularjs создает экземпляр каждого item и на этом экземпляре можно получить доступ к непосредственно самому объекту-->
+                </tr>
+            </tbody>
+        </table>
+
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <!--этот цикл перебирает каждый элемент массива и генерирует для него tr -->
+                    <td ng-repeat="property in task">{{property}}</td> <!--этот перебирает каждое свойство в объекте и генерирует для него td в котором используется one-way binding для отображения данных-->
+                </tr>
+            </tbody>
+        </table>
+
+
+                <!--генерация однотипных элементов самая распространенная задаче в разработке для этого следует использовать директиву ng-repeat-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td ng-repeat="(key, value) in task">
+                        <!--при таком использовании первое значение всегда указывает на ключ а второе непосредственно на само значение-->
+                        {{key}} - {{value}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script src="libs/jquery/jquery.js"></script>
