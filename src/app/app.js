@@ -15,6 +15,13 @@ app.controller('ListCtrl', function ListCtrl($scope) {
         { action: "Buy a book", complete: false },
         { action: "Call mom", complete: false }
     ];
+
+  $scope.showFile = function () {
+        return $scope.list ? "../list.html" : "../table.html";
+    };
+    $scope.displayMessage = function () {
+        console.log("Content: " + $scope.showFile());
+    };
 })
 
 

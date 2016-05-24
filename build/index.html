@@ -9,15 +9,20 @@
 
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
         <h3 class="panel-header">Tasks List</h3>
-        <ng-include src="'../table.html'"></ng-include>
-        <!--обратите внимание что путь к файлу взят в одинарные кавычки, потому что javascript обрабатывает его как выражение которое содержит статический путь к файлу-->
-        <!--директива ng-include запрашивает с сервера фрагмент html разметки,
-        компилирует его для обработки директив которе там могут быть и далее добавляет его в DOM, это аналог partial view-->
-        <p>Don't removed text</p>
-        <!--директиву ng-incude стоит применять только с открывающим и закрывающим тегами
-        так как если применить только один тег то все что содержится в DOM после этой директивы будет удалено, это можно увидеть на примере параграфа-->
- 
+        <div class="well">
+            <div class="checkbox">
+                <label>
+                <!-- будет изменяться true or false -->
+                    <input type="checkbox" ng-model="list" />
+                    Switch the view
+                </label>
+            </div>
+        </div>
+        <div ng-include="showFile()" onload="displayMessage()"></div>
+        <!--displayMessage() фунция, которая будет вызваться в момент загрузки дива-->
+        <!--аттрибут ng-include может быть применен к любому html элементу-->
     </div>
+
     <script src="libs/jquery/jquery.js"></script>
     <!-- <script src="libs/bootstrap-material-design/js/material.js"></script> -->
     <!-- <script src="libs/bootstrap-material-design/js/ripples.js"></script> -->
