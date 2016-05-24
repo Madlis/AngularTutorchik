@@ -6,7 +6,13 @@
 </head>
 <body>
     <!--ng-controller - назначает поведение области видимости. Это ключевой аспект поддержки в Angular шаблона Модель-Вид-Контроллер.-->
-    <div class="container" ng-controller="contryCtrl">
+    <div class="container" ng-controller="russiaCtrl">
+        <h1 class="h1">Страна: {{contry.name}}</h1>
+        <p>Площадь: {{contry.area}} </p>
+        <p>Население: {{contry.population}}</p>
+        <p>Столица: {{contry.capital.name}}</p>
+    </div>
+    <div class="container" ng-controller="canadaCtrl">
         <h1 class="h1">Страна: {{contry.name}}</h1>
         <p>Площадь: {{contry.area}} </p>
         <p>Население: {{contry.population}}</p>
