@@ -5,19 +5,16 @@
     <title>Document</title>
 </head>
 <body>
-    <!--ng-controller - назначает поведение области видимости. Это ключевой аспект поддержки в Angular шаблона Модель-Вид-Контроллер.-->
-    <div class="container" ng-controller="russiaCtrl">
-        <h1 class="h1">Страна: {{contry.name}}</h1>
-        <p>Площадь: {{contry.area}} </p>
-        <p>Население: {{contry.population}}</p>
-        <p>Столица: {{contry.capital.name}}</p>
+    <!-- ng-repeat создает экземпляры по шаблону для каждого элемента коллекции. Каждый экземпляр шаблона получает собственную область видимости, в которой создаются переменные, имеющиеся в текущем элементе коллекции и в $index устанавливается индекс или ключ элемента. -->
+    <div class="container" ng-controller="contriesCtrl">
+        <div class="container" ng-repeat="contry in contries">
+            <h1 class="h1">Страна: {{contry.name}}</h1>
+            <p>Площадь: {{contry.area}} </p>
+            <p>Население: {{contry.population}}</p>
+            <p>Столица: {{contry.capital.name}}</p>
+        </div>
     </div>
-    <div class="container" ng-controller="canadaCtrl">
-        <h1 class="h1">Страна: {{contry.name}}</h1>
-        <p>Площадь: {{contry.area}} </p>
-        <p>Население: {{contry.population}}</p>
-        <p>Столица: {{contry.capital.name}}</p>
-    </div>
+
     <script src="libs/jquery/jquery.js"></script>
     <!-- <script src="libs/bootstrap-material-design/js/material.js"></script> -->
     <!-- <script src="libs/bootstrap-material-design/js/ripples.js"></script> -->
