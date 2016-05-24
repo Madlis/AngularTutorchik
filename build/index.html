@@ -6,33 +6,22 @@
     <link rel="stylesheet" href="styles/style.min.css">
 </head>
 <body>
-    <style>
-        .odd {
-            background-color: #f7d474;
-        }
-
-        .even {
-            background-color: #d6b6f3;
-        }
-    </style>
 
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
         <h3 class="panel-header">Tasks List</h3>
-        <!--генерация однотипных элементов самая распространенная задаче в разработке для этого следует использовать директиву ng-repeat-->
+        <!--очень часто в разработке мы сталкиваемся со случаями когда нам нужно генерировать повторно целые шаблоны и к сожалению директива ng-repeat этого не позволяет-->
+        <!--решением проблемы является использование директив ng-repeat-start и ng-repeat-end-->
+        <!--в этом случае мы четко определяем откуда у нас будет начинатся шаблон для повторения (ng-repeat-start) и где он заканчивается (ng-repeat-end)-->
+        <!--ng-repeat-start будет повторять элементы до тех пор пока не встретит ng-repeat-end далее выполняется переход на следующую итерацию-->
         <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Tasks</th>
-                    <th>Done</th>
-                </tr>
-            </thead>
-            <tr ng-repeat="task in tasks" ng-class="$even?'odd':'even'">
-                <td>{{$index + 1}}</td>
-                <td>{{task.action}}</td>
-                <td><span ng-if="$first || $last">{{task.complete}}</span></td>
-                <!--ng-if используется для отображения элемента в DOM  в зависимости от условия
-                например "$first || $last" означает что будут отображены в DOM  только 1й и последний элементы-->
+            <tr ng-repeat-start="task in tasks">
+                <td>№ {{$index}}</td>
+            </tr>
+            <tr>
+                <td>Description: {{task.action}}</td>
+            </tr>
+            <tr ng-repeat-end>
+                <td>The {{$index}} task is {{task.complete? '' : "not "}} done</td>
             </tr>
         </table>
     </div>
