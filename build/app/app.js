@@ -16,6 +16,13 @@ app.controller('ListCtrl', function ListCtrl($scope) {
         { action: "Call mom", complete: false }
     ];
 
+    $scope.buttonNames = ["Red", "Green", "Blue"];
+    $scope.settings = {
+        Columns: "Green",
+        Rows: "Red"
+    };
+    //Columns исользуется для того, чтобы задать фон для колонки Done
+    //Rows используется для того, чтобы задать цвет для строк <tr>
 })
 
 
