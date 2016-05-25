@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.min.css">
+        <!--директивы ng-show и ng-hide используются для управления видимостью элемента в зависимости от условия
+    эти директивы управляют видимостью элемента добавляя или удаляя класс ng-hide, этот класс применяет css стиль dispaly:none
+    основное различие между ng-show и ng-hide состоит в том что ng-show прячем элемент когда выражение равно false,
+    а ng-hide когда выражение равно true-->
 </head>
 <body>
     <style>
@@ -45,8 +49,9 @@
                     ng-hide(false) - отображает
                         
                     -->
-                    <span ng-hide="task.complete">(Incomplete)</span>
-                    <span ng-show="task.complete">(Done)</span>
+                    <span ng-if="!task.complete">(Incomplete)</span>
+                    <span ng-if="task.complete">(Done)</span>
+                    <!--директива ng-if применяется для отображения элемента в зависимости от условия, при этом эта директива удаляет или добавляет элементы DOM-->
                 </td>
             </tr>
         </table>
