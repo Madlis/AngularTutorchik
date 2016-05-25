@@ -4,55 +4,37 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.min.css">
-        <!--директивы ng-show и ng-hide используются для управления видимостью элемента в зависимости от условия
-    эти директивы управляют видимостью элемента добавляя или удаляя класс ng-hide, этот класс применяет css стиль dispaly:none
-    основное различие между ng-show и ng-hide состоит в том что ng-show прячем элемент когда выражение равно false,
-    а ng-hide когда выражение равно true-->
+<!--директивы ng-show, ng-hide и ng-if имеют проблемы когда их применяют для задания стилей таблицам -->
 </head>
 <body>
-    <style>
-        td > *:first-child {
-            font-weight: bold;
-            /*обратите внимание что этот стиль применяется только к элементам с надписью Incomplete,
-            проблема состоит в том что ng-hide и ng-show оставляют в DOM элементы которые они прячут,
-            пользователь не видит эти элементы но они видны браузеру и поэтому к ним применяется стиль
-            в этой ситуации лучше удалять элементы с DOM  используя директиву ng-if*/
-        }
-    </style>
+
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-       <h3 class="panel-header">Tasks List</h3>
+        <h3 class="panel-header">Tasks List</h3>
         <div class="checkbox well">
             <label>
                 <input type="checkbox" ng-model="tasks[3].complete" />
                 Task 4 is complete
             </label>
         </div>
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Tasks</th>
                     <th>Done</th>
-                    <th>Status</th>
                 </tr>
             </thead>
-            <tr ng-repeat="task in tasks">
+            <tr style="background-color:beige" ng-repeat="task in tasks" ng-hide="task.complete">
+                <!--AngularJS обработал директивы и так как элементы спрятаны а не удалены результат направльное применение стиля для виделения строк таблицы-->
                 <td>{{$index + 1}}</td>
-                <td ng-repeat="property in task">{{property}}</td>
-                <td>
-                    <!--Основное различие между ng-show и ng-hide состоит в том, что ng-show прячет элемент когда выражение равно false, а ng-hide когда выражение равно true.
-                    
-                    ng-show(true) - отображает
-                    ng-show(false) - прячет
-                        
-                    ng-hide(true) - прячет
-                    ng-hide(false) - отображает
-                        
-                    -->
-                    <span ng-if="!task.complete">(Incomplete)</span>
-                    <span ng-if="task.complete">(Done)</span>
-                    <!--директива ng-if применяется для отображения элемента в зависимости от условия, при этом эта директива удаляет или добавляет элементы DOM-->
-                </td>
+                <td>{{task.action}}</td>
+                <td>{{task.complete}}</td>
+            </tr>
+            <tr style ="background-color:#baf8f8" ng-repeat="task in tasks" ng-if="!task.complete">
+                <!--когда мы используем директиву ng-if то элементы удаляются с DOM, в этом случае стили отображаются корректно-->
+                <td>{{$index + 1}}</td>
+                <td>{{task.action}}</td>
+                <td>{{task.complete}}</td>
             </tr>
         </table>
     </div>
