@@ -20,7 +20,7 @@
             background-color: lightblue;
         }
     </style>
-    
+
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
         <h3 class="panel-header">Tasks List</h3>
         <div class="row well">
@@ -41,7 +41,7 @@
                     <th>Done</th>
                 </tr>
             </thead>
-            <tr ng-repeat="task in tasks" ng-class="settings.Rows">
+            <tr ng-repeat="task in tasks" ng-class-event="settings.Rows" ng-class-odd="settings.Rows">
                 <!--ng-class используется для того чтобы можно было динамически изменять CSS класс элемента,
                 здесь используется свойсвто Row объекта settings в котором хранится название стиля "Red"--> 
                 <td>{{$index + 1}}</td>
