@@ -4,6 +4,8 @@ var app = angular.module('app', [])
   //$scope всего лишь один из сервисов, внедренных в контроллер.
 app.controller('ListCtrl', function ListCtrl($scope) {
 
+  $scope.data = {};
+ console.log($scope.data.mode);
   $scope.tasks = [
         { action: "Buy flowers", complete: false },
         { action: "Go to gym", complete: false },
@@ -16,12 +18,6 @@ app.controller('ListCtrl', function ListCtrl($scope) {
         { action: "Call mom", complete: false }
     ];
 
-  $scope.showFile = function () {
-        return $scope.list ? "../list.html" : "../table.html";
-    };
-    $scope.displayMessage = function () {
-        console.log("Content: " + $scope.showFile());
-    };
 })
 
 
