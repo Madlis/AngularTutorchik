@@ -6,53 +6,50 @@
     <link rel="stylesheet" href="styles/style.min.css">
 </head>
 <body>
-
+    <style>
+        td > *:first-child {
+            font-weight: bold;
+            /*обратите внимание что этот стиль применяется только к элементам с надписью Incomplete,
+            проблема состоит в том что ng-hide и ng-show оставляют в DOM элементы которые они прячут,
+            пользователь не видит эти элементы но они видны браузеру и поэтому к ним применяется стиль
+            в этой ситуации лучше удалять элементы с DOM  используя директиву ng-if*/
+        }
+    </style>
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-        <h3 class="panel-header">Tasks List</h3>
-
-        <div class="well">
-            <div class="radio" ng-repeat="button in ['Default', 'Table', 'List']">
-                <label>
-                    <input type="radio" ng-model="data.mode"
-                           value="{{button}}" ng-checked="$first" />
-                    {{button}}
-                </label>
-            </div>
+       <h3 class="panel-header">Tasks List</h3>
+        <div class="checkbox well">
+            <label>
+                <input type="checkbox" ng-model="tasks[3].complete" />
+                Task 4 is complete
+            </label>
         </div>
-        <div ng-switch on="data.mode">
-            <!--директива ng-switch может быть примененна как элемент и как атрибут, а ng-switch-when и ng-switch-default только как атрибуты-->
-            <!--здесь у атрибута ng-switch присутствует атрибут on который указывает на некое условие
-            в зависимости от условия будет отображатся та или инная часть разметки. Это все очень похоже на switch-case-->
-            <div ng-switch-when="Table">
-                <!--ng-switch-when определяет участок разметки с которым ассоциируется условие-->
-                <table class="table">
-                    <thead>
-                        <tr><th>#</th><th>Task</th><th>Done</th></tr>
-                    </thead>
-                    <tr ng-repeat="task in tasks" ng-class="$odd ? 'odd' : 'even'">
-                        <td>{{$index + 1}}</td>
-                        <td ng-repeat="property in task">{{property}}</td>
-                    </tr>
-                </table>
-            </div>
-            <div ng-switch-when="List">
-                <ol>
-                    <li ng-repeat="task in tasks">
-                        {{task.action}}<span ng-if="task.complete"> (Done)</span>
-                    </li>
-                </ol>
-            </div>
-            <div ng-switch-default>
-                <!--если ни один из вариантов представленных в условии не соответствует ожидаемым значениям
-                     то будет использоватся участок разметки, декорированный атрибутом ng-switch-default-->
-                Select another option to display a layout
-            </div>
-        </div>
-        <!--используйте директиву ng-switch когда вам нужно переключатся между небольшими участками разметки, которые вы хотите показать пользователю,
-        не следует использовать эте директиву если вы планируете показывать большие участки разметки так как то, чем оперирует ng-switch - это разметка
-        которая уже загружена, а значит вам прийдется загружать большие файлы, что влечет за собой уменьшение скорости-->
-        <!--ng-include следует использовать для более тяжелого контента или контента который вы планируете использовать в нескольких местах вашего приложения,
-         но следует помнить, что если вы используете ng-include, то у вас выполняется ajax запрос на сервер а это так же займет некоторое время, если этот запрос выполняется впервые-->     
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tasks</th>
+                    <th>Done</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="task in tasks">
+                <td>{{$index + 1}}</td>
+                <td ng-repeat="property in task">{{property}}</td>
+                <td>
+                    <!--Основное различие между ng-show и ng-hide состоит в том, что ng-show прячет элемент когда выражение равно false, а ng-hide когда выражение равно true.
+                    
+                    ng-show(true) - отображает
+                    ng-show(false) - прячет
+                        
+                    ng-hide(true) - прячет
+                    ng-hide(false) - отображает
+                        
+                    -->
+                    <span ng-hide="task.complete">(Incomplete)</span>
+                    <span ng-show="task.complete">(Done)</span>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <script src="libs/jquery/jquery.js"></script>
