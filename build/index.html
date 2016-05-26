@@ -5,72 +5,49 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.min.css">
 </head>
-<!--когда мы хотим использовать disable для элемента в зависимости от условия то мы этого не можем сделать так как функционал этого атрибуте это не предусматривает
-для этого в AngularJS предусмотрены специальные директивы которые могут применятся в зависимости от условия, эти директивы применимы только как атрибуты
-ng-checked используется для установки значения выбран\не выбран для input
-ng-disabled используется для disable элемента применяется для input и button
-ng-readonly используется для атрибута readonly применяется к input
-ng-selected используется для атрибута selected в option-->
-<!--ng-href используется для указания url в href
-ng-src используется для указания физического пути-->
+    <!--существует несколько переменных валидации в angular:
+        $pristine  возвращает true если пользователь не взаимодействовал с элементами формы
+        $dirty  возвращает true если пользователь взаимодействовал с элементами формы
+        $valid возвращает true если форма валидна
+        $invalid возвращает true если форма невалидна
+        $error содержит информацию об ошибках валидации-->
 <body class="text-center well">
 
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-        <div class="panel-heading">
-            <div class="panel-title">
-                <h2>
-                    Incomplete tasks
-                    <span class="label label-info">
-                        {{(tasks | filter : {complete:'false'}).length}}
-                        <!--здесь используется фильтр с помощью директивы filter, он указывает на те элементы которые помечены как false и с помощью length получает их колличество,
-                        так же здесь используется class='label label-info' Bootstrap для визуального оформленеия-->
-                    </span>
-                </h2>
-            </div>
-        </div>
-        <div id="panel" class="panel-body">
-            <div class="row">
-                <div class="col-xs-3">
-                    <div class="well">
-                        <h2>Add new Task</h2>
-                        <div class="form-group row">
-                            <label for="actionText">Action:</label>
-                            <input id="actionText" class="form-control" ng-model="newTask.action" />
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="actionLocation">Priority:</label>
-                            <select id="actionLocation" class="form-control" ng-model="newTask.Priority">
-                                <option>High</option>
-                                <option>Regular</option>
-                                <option>Low</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary btn-block" ng-click="addTask(newTask)">Add</button>
-                        <!--объекта newtask не существует при первом запуске приложение, но как только пользователь введет значение  в один из контролов ( Action или Priority)
-                        то Angular автоматически создаст объект и запишет туда свойство
-                        в директиве ng-click вызывается метод и ему передается уже готовый и заполненный объект-->
-                    </div>
+        <form name="myForm" novalidate ng-submit="addNewUser(user)">
+           <!--атрибут name нужно указывать, так как далее он будет использоваться angular при проверке формы на валидность, это так же касается элементов формы
+            так же здесь указан атрибут novalidate для того чтобы браузеры не пытались сами валидировать данные и предоставили это angular-->
+            <div class="well">
+                <div class="form-group">
+                    <label>Name:</label>
+                   <!--так же в примере для проверки валидности используются стандартные возможности HTML: атрибуты и встроенная валидация по type
+                    например required указывает на обязательность значения, а type="email" будет проверять на валидность данные с помощью регулярного выражения-->
+                    <input name="userName" type="text" class="form-control" required ng-model="user.name">
                 </div>
-                <div class="col-xs-3" ng-repeat="task in tasks">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h3>{{task.action}}</h3>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <h3>
-                                <input id="checkbox" type="checkbox" class="checkbox checkbox-inline" ng-model="task.complete" />
-                                <!--ng-model используется для создания two-way binding, в таком случае при изменении состояния checkbox будет изменятся содержимое модели,
-                                и все one-way или two-way bindings которые используют значения модели-->
-                                <label for="checkbox">{{task.complete}}</label>
-                            </h3>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input name="userEmail" type="email" class="form-control" required ng-model="user.email">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input name="agreed" type="checkbox"
+                               ng-model="user.agreed" required>
+                        I agree to the terms and conditions
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" ng-disabled="myForm.$invalid">
+                    <!--здесь используется директива ng-disabled для того чтобы задавать состояние кнопки в случае не валидности данных в форме
+                    обратите внимание что переменную $invalid получаем на myForm, вот почему так важно задавать атрибут name как для форм так и для элементов формы-->
+                    OK
+                </button>
+            </div>
+            <div class="well">
+                Message: {{message}}
+                <div>
+                    Valid: {{myForm.$valid}}
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <script src="libs/jquery/jquery.js"></script>
