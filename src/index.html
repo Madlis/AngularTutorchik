@@ -5,6 +5,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.min.css">
 </head>
+    <!--отображение сообщений о невалидности пользовательского ввода это хороший тон но существует два подхода для 
+    отображения сообщений: 1й когда ввод валидируется после каждого действия пользователя и 2й данные валидируются после нажатия на кнопку submit-->
     <!--существует несколько переменных валидации в angular:
         $pristine  возвращает true если пользователь не взаимодействовал с элементами формы
         $dirty  возвращает true если пользователь взаимодействовал с элементами формы
@@ -41,47 +43,23 @@
         /*эти два стиля применяются к блоку summary в зависимости от того валидны ли данные в форме или нет*/
     </style>
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-        <form name="myForm" novalidate ng-submit="addNewUser(user)">
-           <!--атрибут name нужно указывать, так как далее он будет использоваться angular при проверке формы на валидность, это так же касается элементов формы
-            так же здесь указан атрибут novalidate для того чтобы браузеры не пытались сами валидировать данные и предоставили это angular-->
+       <form name="myForm" novalidate ng-submit="addNewUser(newUser)" ng-class="showValidation ? 'validate' : ''">
             <div class="well">
                 <div class="form-group">
                     <label>Name:</label>
-                   <!--так же в примере для проверки валидности используются стандартные возможности HTML: атрибуты и встроенная валидация по type
-                    например required указывает на обязательность значения, а type="email" будет проверять на валидность данные с помощью регулярного выражения-->
-                    <input name="userName" type="text" class="form-control" required ng-model="user.name">
+                    <input name="userName" type="text" class="form-control" required ng-model="newUser.name">
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input name="userEmail" type="email" class="form-control" required ng-model="user.email">
-                    <div class="error" ng-show="myForm.userEmail.$invalid && myForm.userEmail.$dirty">
+                    <input name="userEmail" type="email" class="form-control" required ng-model="newUser.email">
+                    <div class="error" ng-show="showValidation">
                         {{getError(myForm.userEmail.$error)}}
                     </div>
                 </div>
-                <div class="checkbox">
-                    <label>
-                        <input name="agreed" type="checkbox"
-                               ng-model="user.agreed" required>
-                        I agree to the terms and conditions
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block" ng-disabled="myForm.$invalid">
-                    <!--здесь используется директива ng-disabled для того чтобы задавать состояние кнопки в случае не валидности данных в форме
-                    обратите внимание что переменную $invalid получаем на myForm, вот почему так важно задавать атрибут name как для форм так и для элементов формы-->
+                <button type="submit" class="btn btn-primary btn-block">
                     OK
                 </button>
             </div>
-            <div class="well">
-                Message: {{message}}
-                <div>
-                    Valid:
-                    <span class="summary" ng-class="myForm.$valid ? 'ng-valid' : 'ng-invalid'">
-                        <!--так же можно используя переменные валидации angular самостоятельно применять те или инные стили при соблюдении валидности\невалидности-->
-                        {{myForm.$valid}}
-                    </span>
-                </div>
-            </div>
-        </form>
     </div>
 
     <script src="libs/jquery/jquery.js"></script>

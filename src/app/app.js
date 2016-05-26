@@ -4,7 +4,11 @@ var app = angular.module('app', [])
   //$scope всего лишь один из сервисов, внедренных в контроллер.
 app.controller('ListCtrl', function ListCtrl($scope) {
   $scope.addNewUser = function (userDetails) {
-        $scope.message = "Name: " + userDetails.name + " Email: " + userDetails.email;
+    if (myForm.$valid) {
+      $scope.message = "Name: " + userDetails.name + " Email: " + userDetails.email;
+    } else {
+      $scope.showValidation = true;
+    }
   };
   $scope.message = "Ready";
   $scope.getError = function (error) {
