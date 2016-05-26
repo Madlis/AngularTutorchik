@@ -55,15 +55,7 @@
                     <label>Email:</label>
                     <input name="userEmail" type="email" class="form-control" required ng-model="user.email">
                     <div class="error" ng-show="myForm.userEmail.$invalid && myForm.userEmail.$dirty">
-                        <!--myForm.userEmail.$invalid && myForm.userEmail.$dirty такое условие необходимо потому что если элемент pristine и required
-                        то для него сразу будет отображатся сообщение о невалидности что может сбить с толку пользователя который еще ничего даже и не вводил,
-                        поэтому сообщения применятся только если у элемента присутствует класс dirty-->
-                        <span ng-show="myForm.userEmail.$error.email">
-                            Please enter a valid email address
-                        </span>
-                        <span ng-show="myForm.userEmail.$error.required">
-                            Please enter a value
-                        </span>
+                        {{getError(myForm.userEmail.$error)}}
                     </div>
                 </div>
                 <div class="checkbox">
