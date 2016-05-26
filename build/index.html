@@ -13,12 +13,14 @@
         $error содержит информацию об ошибках валидации-->
 <body class="text-center well">
     <style>
-        /*изначально когда страница только загрузилась к элементам не применяется никакой стиль
-        так как они относятся к классу ng-pristine для которого стили не заданы*/
-        form .ng-invalid.ng-dirty {
+        /*angular так же позволяет применять стили в зависимости от того какое ограничение на валидность срабатывает
+        ниже приведено 2 стиля: 1й срабатывает если мы сделали поле dirty 2й когда email не прошел валидность*/
+        form .ng-invalid-required.ng-dirty {
             background-color: lightpink;
         }
-
+        form .ng-invalid-email.ng-dirty {
+            background-color: lightgoldenrodyellow;
+        }
         form .ng-valid.ng-dirty {
             background-color: lightgreen;
         }
