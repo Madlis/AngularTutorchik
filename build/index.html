@@ -4,48 +4,13 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.min.css">
-<!--директивы ng-show, ng-hide и ng-if имеют проблемы когда их применяют для задания стилей таблицам -->
 </head>
 <body>
-    <style>
-        .Red {
-            background-color: lightcoral;
-        }
 
-        .Green {
-            background-color: lightgreen;
-        }
-        .Blue {
-            background-color: lightblue;
-        }
-        .Greed {
-            background: #e1e1e1;
-        }
-    </style>
      <div id="tasksPanel" class="panel" ng-controller="ListCtrl">
-        <h3 class="panel-header">Tasks List</h3>
-        <div class="row well">
-            <span ng-repeat="button in buttonNames">
-                <button class="btn btn-info" ng-click="data.rowColor = button">
-                    <!--ng-click используется для обработки собтия нажатия на сгенерированной кнопке, устанавливая значение стиля равное названию кнопки--> 
-                    {{button}}
-                </button>
-            </span>
+        <div class="well" tap="message = 'Hovered!'">
+            {{message}}
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Tasks</th>
-                    <th>Done</th>
-                </tr>
-            </thead>
-            <tr ng-repeat="task in tasks" ng-class="data.rowColor" ng-mouseenter="handleEvent($event)" ng-mouseleave="handleEvent($event)">
-                <td>{{$index + 1}}</td>
-                <td>{{task.action}}</td>
-                <td ng-class="data.columnColor">{{task.complete}}</td>
-            </tr>
-        </table>
     </div>
 
     <script src="libs/jquery/jquery.js"></script>
